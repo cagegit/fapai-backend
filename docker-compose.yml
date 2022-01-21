@@ -1,0 +1,11 @@
+version: '3'
+services:
+  fast_api:
+    platform: linux/amd64
+    build: .
+    container_name: "fapai"
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./backend/:/backend/backend
+           
