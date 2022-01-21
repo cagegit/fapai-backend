@@ -1,6 +1,6 @@
 from typing import List, AnyStr
 
-from sqlalchemy import log
+from core.setting import settings
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.requests import Request
