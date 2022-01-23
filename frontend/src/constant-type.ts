@@ -137,3 +137,22 @@ export type AreaItem = {
   key?: number;
   name?: string;
 }
+
+
+export type ModelAdd = { 
+  // id: number;
+  title: string;
+  bdw_info: string;
+  pmxz_info: string
+  pmgg_info: string
+  description?: string;
+}
+
+export type ModelItem = { 
+  id?: number;
+  title?: string;
+  bdw_info?: string;
+  pmxz_info?: string
+  pmgg_info?: string
+  description?: string;
+}

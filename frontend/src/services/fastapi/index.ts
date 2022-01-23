@@ -1,5 +1,5 @@
 import { request } from 'umi';
-import {LoginNewResult,CurrentUser, GoodList, GoodAdd, AreaAdd} from '@/constant-type'
+import {LoginNewResult,CurrentUser, GoodList, GoodAdd, AreaAdd, ModelAdd} from '@/constant-type'
 
 /** 登录接口 POST /api/login/account */
 export async function login(body: string) {
@@ -169,6 +169,35 @@ export async function get_areas (
 // 获取不分页区域
 export async function get_areas_all() {
   return request('/api/v1/areas', {
+    method: 'GET',
+  });
+}
+
+// ----------------------------- 模版增删改查 --------------------
+// 新增模版接口
+export async function add_model(params: ModelAdd) {
+  return request('/api/v1/model', {
+    method: 'POST',
+    data: params,
+  });
+}
+// 修改模版接口
+export async function update_model(id:number, params: ModelAdd) {
+  return request('/api/v1/model/' + id, {
+    method: 'PUT',
+    data: params,
+  });
+}
+// 删除模版接口
+export async function delete_model(id:string) {
+  return request('/api/v1/model/' + id, {
+    method: 'DELETE',
+  });
+}
+
+// 获取不分页区域
+export async function get_model_all() {
+  return request('/api/v1/models', {
     method: 'GET',
   });
 }

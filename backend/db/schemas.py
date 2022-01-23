@@ -88,4 +88,25 @@ class AreaOut(AreaBase):
         
 class Area(AreaBase):
     class Config:
-        orm_mode = True             
+        orm_mode = True          
+        
+ # 模版       
+class ModelBase(BaseModel):
+    # id: int
+    title: str
+    bdw_info: str
+    pmxz_info: str
+    pmgg_info: str
+    description: t.Optional[str]           
+    
+class Model(ModelBase):
+    class Config:
+        orm_mode = True     
+        
+class ModelOut(ModelBase):
+    id:int
+    class Config:
+        orm_mode = True    
+        
+class ModelList():
+    data: t.List[ModelOut]            

@@ -24,5 +24,8 @@ Base = declarative_base()
 
 async def get_db() -> AsyncSession:
     async with async_session() as session:
-        yield session
+        try:
+            yield session
+        finally:
+            await session.close()    
         # await session.commit()

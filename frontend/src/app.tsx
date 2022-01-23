@@ -49,6 +49,8 @@ async function authHeaderInterceptor(url: any, options: any){
             console.log(err);
             resolve_wa(null);
             pendingPromise = null;
+            localStorage.removeItem('maxRfTime');
+            localStorage.removeItem('maxAcTime');
             // 如果刷新token接口失败，直接跳转登录
             location.href = loginPath;
           }

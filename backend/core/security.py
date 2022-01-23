@@ -35,6 +35,7 @@ def get_password_hash(password):
 
 async def authenticate_user(db, phone: str, password: str):
     user = await get_user_by_phone(db, phone)
+    print(user.hashed_password)
     if not user:
         return False
     if not verify_password(password, user.hashed_password):
@@ -136,7 +137,7 @@ async def sign_up_new_user(db, phone: str, password: str):
     new_user = await create_user(
         db,
         schemas.UserCreate(
-            name='',
+            name=phone,
             phone=phone,
             password=password,
             is_active=True,

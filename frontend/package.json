@@ -64,6 +64,7 @@
     "bizcharts-plugin-slider": "^2.1.1-beta.1",
     "classnames": "^2.2.6",
     "gg-editor": "^2.0.2",
+    "jodit-react": "^1.1.18",
     "lodash": "^4.17.11",
     "lodash-decorators": "^6.0.0",
     "moment": "^2.25.3",

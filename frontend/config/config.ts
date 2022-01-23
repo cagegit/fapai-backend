@@ -75,6 +75,24 @@ export default defineConfig({
           icon: 'Environment',
           path: '/goods/area',
           component: './goods/area',
+        },
+        {
+          name: '模版管理',
+          icon: 'Environment',
+          path: '/goods/model',
+          component: './goods/model',
+        },
+        {
+          // name: '模版添加',
+          icon: 'Environment',
+          path: '/goods/model/add',
+          component: './goods/model/add',
+        },
+        {
+          // name: '模版修改',
+          icon: 'Environment',
+          path: '/goods/model/edit/:id',
+          component: './goods/model/edit',
         }
       ],
     },

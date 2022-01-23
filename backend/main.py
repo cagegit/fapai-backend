@@ -10,6 +10,7 @@ from routers.users import users_router
 from routers.auth import auth_router
 from routers.good import goods_router
 from routers.area import areas_router
+from routers.model import models_router
 from fastapi_pagination import add_pagination
 import uvicorn
 
@@ -75,6 +76,12 @@ app.include_router(
     areas_router,
     prefix="/api/v1",
     tags=["areas"],
+    dependencies=[Depends(get_current_active_user)],
+)
+app.include_router(
+    models_router,
+    prefix="/api/v1",
+    tags=["models"],
     dependencies=[Depends(get_current_active_user)],
 )
 app.include_router(auth_router, prefix="/api", tags=["auth"])

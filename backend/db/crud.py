@@ -18,7 +18,7 @@ async def get_user(db: AsyncSession, user_id: int):
 
 async def get_user_by_phone(db: AsyncSession, phone: str) -> schemas.UserBase:
     print(phone)
-    q = await db.execute(select(models.User))
+    q = await db.execute(select(models.User).filter(models.User.phone == phone))
     # print(q.scalars().all())
     return q.scalars().first()
 # 查找用户列表
@@ -188,3 +188,66 @@ async def delete_area(
     await db.delete(db_area)
     await db.commit()
     return db_area
+
+# ------------- 模版 -------------
+# 查询单个模版
+async def get_model_by_id(db: AsyncSession, id: int):
+    q = await db.execute(select(models.Model).filter(models.Model.id == id))
+    model = q.scalars().first()
+    if not model:
+        raise HTTPException(status_code=404, detail="模版不存在")
+    return model
+
+async def get_model_by_title(db: AsyncSession, title: str):
+    q = await db.execute(select(models.Model).filter(models.Model.title == title))
+    return q.scalars().first()
+
+# 模版新增
+async def add_model(db: AsyncSession, model: schemas.Model):
+    old_model = await get_model_by_title(db, model.title)
+    if old_model:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="模版名称重复",
+            headers={"WWW-Authenticate": "Bearer"},
+        )  
+    db_model = models.Model(
+        title=model.title,
+        bdw_info=model.bdw_info,
+        pmxz_info=model.pmxz_info,
+        pmgg_info=model.pmgg_info,
+        description=model.description
+    )
+    db.add(db_model)
+    await db.commit()
+    await db.refresh(db_model)
+    return db_model
+
+# 模型编辑
+async def edit_model(
+    db: AsyncSession, model_id: int, model: schemas.Model
+) -> schemas.ModelOut:
+    db_model = await get_model_by_id(db, model_id)
+    update_data = model.dict(exclude_unset=True)
+    for key, value in update_data.items():
+        setattr(db_model, key, value)
+    db.add(db_model)
+    await db.commit()
+    await db.refresh(db_model)
+    return db_model
+
+# 全部模型
+async def search_model_all(
+    db: AsyncSession
+) -> t.List[schemas.ModelOut]:
+    result = await db.execute(select(models.Model).limit(1000))  
+    return result.scalars().all()
+
+# 模型删除
+async def delete_model(
+    db: AsyncSession, model_id: int
+) -> schemas.AreaOut:
+    db_model = await get_model_by_id(db, model_id)
+    await db.delete(db_model)
+    await db.commit()
+    return db_model
